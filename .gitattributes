@@ -1,0 +1,2 @@
+Assets/3dAssetes/Mesh/MutedHumanvar1.fbx filter=lfs diff=lfs merge=lfs -text
+*.fbx filter=lfs diff=lfs merge=lfs -text
