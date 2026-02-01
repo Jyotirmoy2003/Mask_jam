@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -11,6 +12,7 @@ namespace StarterAssets
 		public Vector2 move;
 		public Vector2 look;
 		public bool jump;
+		public bool mask;
 		public bool sprint;
 
 		[Header("Movement Settings")]
@@ -19,6 +21,8 @@ namespace StarterAssets
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
+		public static Action INPAC_ONMASKBUTTONPRESSED;
+		public static Action INPAC_ONBACKBUTTONPRESSED;
 
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
@@ -33,10 +37,19 @@ namespace StarterAssets
 				LookInput(value.Get<Vector2>());
 			}
 		}
+		public void OnBack(InputValue value)
+		{
+			INPAC_ONBACKBUTTONPRESSED?.Invoke();
+		}
 
 		public void OnJump(InputValue value)
 		{
 			JumpInput(value.isPressed);
+		}
+
+		public void OnMask(InputValue value)
+		{
+			MaskInput(value.isPressed);
 		}
 
 		public void OnSprint(InputValue value)
@@ -61,6 +74,12 @@ namespace StarterAssets
 			jump = newJumpState;
 		}
 
+		public void MaskInput(bool newMaskState)
+		{
+			mask = newMaskState;
+			INPAC_ONMASKBUTTONPRESSED?.Invoke();
+		}
+
 		public void SprintInput(bool newSprintState)
 		{
 			sprint = newSprintState;
@@ -73,6 +92,11 @@ namespace StarterAssets
 
 		private void SetCursorState(bool newState)
 		{
+			if(GameManager.Instance.isGamePaused || GameManager.Instance.isPlayerDied)
+			{
+				Cursor.lockState = CursorLockMode.None;
+				return;
+			}
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 	}

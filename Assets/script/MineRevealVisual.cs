@@ -18,8 +18,13 @@ public class MineRevealVisual : MonoBehaviour
         Renderer renderer = GetComponent<Renderer>();
         materialInstance = renderer.material;
 
-        //DisableReveal();
-        EnableReveal();
+        DisableReveal();
+        //EnableReveal();
+    }
+
+    public void ListenToOnInit()
+    {
+        
     }
 
     public void EnableReveal()

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Landmine : MonoBehaviour
@@ -19,12 +20,14 @@ public class Landmine : MonoBehaviour
     [Header("VFX")]
     [SerializeField] private GameObject explosionVFX;
     [SerializeField] private float destroyDelay = 0.1f;
+    [SerializeField] List<GameObject> lindMineMeshes = new List<GameObject>();
 
     private bool hasExploded = false;
 
     void Start()
     {
         InvokeRepeating(nameof(PlayBeepSound),beepSoundInterval,beepSoundInterval);
+        HideMine();
     }
 
     void PlayBeepSound()
@@ -69,7 +72,7 @@ public class Landmine : MonoBehaviour
 
         foreach (Collider col in colliders)
         {
-            Debug.Log("Adding force to "+ col.gameObject.name);
+            
             // Damage
             IDamageable damageable = col.GetComponentInParent<IDamageable>();
             if (damageable != null)
@@ -99,5 +102,33 @@ public class Landmine : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
+    }
+
+    public void ListenToOnMaskModeChange(Component sender,object data)
+    {
+        if((bool)data)
+        {
+            ShowMine();
+        }
+        else
+        {
+            HideMine();
+        }
+    }
+
+    void ShowMine()
+    {
+        foreach (GameObject item in lindMineMeshes)
+        {
+            item.SetActive(true);
+        }
+    }
+
+    void HideMine()
+    {
+        foreach (GameObject item in lindMineMeshes)
+        {
+            item.SetActive(false);
+        }
     }
 }

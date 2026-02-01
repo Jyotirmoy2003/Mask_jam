@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour, IDamageable
 {
@@ -8,6 +9,8 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
     [Header("References")]
     [SerializeField] private RagdollSwitcher ragdollSwitcher;
+    [SerializeField] PlayerInput playerInput;
+    [SerializeField] GameObject maskObject;
 
     private bool isDead = false;
 
@@ -36,6 +39,8 @@ public class PlayerManager : MonoBehaviour, IDamageable
     {
         isDead = true;
 
+        if(playerInput)
+        playerInput.enabled = false;
         // Switch to ragdoll
         if (ragdollSwitcher != null)
         {
@@ -47,5 +52,18 @@ public class PlayerManager : MonoBehaviour, IDamageable
         // GetComponent<PlayerController>().enabled = false;
 
         Debug.Log("Player died and ragdoll activated");
+        GameManager.Instance.OnPlayerDie();
+    }
+
+    public void ListenToMaskModeChange(Component sender,object data)
+    {
+        if((bool)data)
+        {
+            maskObject.SetActive(true);
+        }
+        else
+        {
+            maskObject.SetActive(false);
+        }
     }
 }

@@ -1,2 +1,3 @@
 This package is licensed under the Unity Companion License. 
 For full license terms, please see: https://unity3d.com/legal/licenses/Unity_Companion_License
+<a href="https://www.flaticon.com/free-icons/infrared" title="infrared icons">Infrared icons created by Nhor Phai - Flaticon</a>

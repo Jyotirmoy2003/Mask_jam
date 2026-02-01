@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class VisionSwitcher : MonoBehaviour
+public class VisionSwitcher : MonoSingleton<VisionSwitcher>
 {
     [Header("Volume")]
     [SerializeField] private Volume globalVolume;
@@ -13,6 +13,7 @@ public class VisionSwitcher : MonoBehaviour
 
     private void Awake()
     {
+        base.Awake();
         if (globalVolume == null)
             globalVolume = GetComponent<Volume>();
 
