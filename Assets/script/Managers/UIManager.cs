@@ -23,7 +23,7 @@ public class UIManager : MonoSingleton<UIManager>
     void Start()
     {
         pausePanel.SetActive(false);
-        controlsPanel.SetActive(false);
+        //controlsPanel.SetActive(false);
         restartPanel.SetActive(false);
     }
 

@@ -1,3 +1,4 @@
+using Unity.Loading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,6 +6,7 @@ public class LevelLoader : MonoSingleton<LevelLoader>
 {
     public void LoadLevel(int buildIndex)
     {
+        Debug.Log("Loading lvevl:"+buildIndex);
         // Safety check
         if (buildIndex < 0 || buildIndex >= SceneManager.sceneCountInBuildSettings)
         {

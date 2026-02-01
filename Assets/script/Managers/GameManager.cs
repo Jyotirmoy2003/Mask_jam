@@ -15,6 +15,7 @@ public class GameManager : MonoSingleton<GameManager>
         StarterAssetsInputs.INPAC_ONBACKBUTTONPRESSED += OnBackButtonPressed;
         UIManager.Instance.FadeOutBlackScreen();
         Cursor.lockState = CursorLockMode.Locked;
+        Application.targetFrameRate = 120;
     }
     public void OnPlayerDie()
     {
@@ -81,12 +82,17 @@ public class GameManager : MonoSingleton<GameManager>
     {
         UIManager.Instance.ShowControlls(true);
         UIManager.Instance.PauseMenuOpenStatus(false);
+        UIManager.Instance.RestartMenuOpenStatus(false);
     }
 
     public void OnBackFromControlls()
     {
         UIManager.Instance.ShowControlls(false);
-        UIManager.Instance.PauseMenuOpenStatus(true);
+        if(isPlayerDied)
+        {
+            UIManager.Instance.RestartMenuOpenStatus(true);
+        }else
+            UIManager.Instance.PauseMenuOpenStatus(true);
     }
 
     public void OnMainMenuButtonPressed()

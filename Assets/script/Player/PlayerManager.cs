@@ -5,6 +5,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
 {
     [Header("Health")]
     [SerializeField] private int maxHealth = 100;
+    [SerializeField] GameEvent Event_OnplayerDied;
     private int currentHealth;
 
     [Header("References")]
@@ -53,6 +54,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
 
         Debug.Log("Player died and ragdoll activated");
         GameManager.Instance.OnPlayerDie();
+        Event_OnplayerDied?.Raise(this,true);
     }
 
     public void ListenToMaskModeChange(Component sender,object data)
