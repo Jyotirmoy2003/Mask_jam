@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +12,7 @@ public class PlayerManager : MonoBehaviour, IDamageable
     [Header("References")]
     [SerializeField] private RagdollSwitcher ragdollSwitcher;
     [SerializeField] PlayerInput playerInput;
-    [SerializeField] GameObject maskObject;
+
 
     private bool isDead = false;
 
@@ -61,11 +62,60 @@ public class PlayerManager : MonoBehaviour, IDamageable
     {
         if((bool)data)
         {
-            maskObject.SetActive(true);
+            MaskOn();
         }
         else
         {
-            maskObject.SetActive(false);
+            MaskOff();
         }
     }
+    #region Mask
+
+    [Header("Mask Pivot")]
+    [SerializeField] private Transform maskPivot;
+
+    [Header("Rotation")]
+    [SerializeField] private Vector3 maskOnRotation = Vector3.zero;        // on face
+    [SerializeField] private Vector3 maskOffRotation = new Vector3(90, 0, 0); // away
+    [SerializeField] private float rotateDuration = 0.4f;
+    [SerializeField] private Ease rotateEase = Ease.OutSine;
+
+    private Tween rotateTween;
+    private bool isMaskOn = false;
+
+    // ---------------- PUBLIC API ----------------
+
+    public void MaskOn()
+    {
+        if (isMaskOn || maskPivot == null)
+            return;
+
+        RotateTo(maskOnRotation);
+        isMaskOn = true;
+    }
+
+    public void MaskOff()
+    {
+        if (!isMaskOn || maskPivot == null)
+            return;
+
+        RotateTo(maskOffRotation);
+        isMaskOn = false;
+    }
+
+    // ---------------- INTERNAL ----------------
+
+    private void RotateTo(Vector3 targetRotation)
+    {
+        // Cancel previous rotation (spam safe)
+        if (rotateTween != null && rotateTween.IsActive())
+            rotateTween.Kill();
+
+        rotateTween = maskPivot.DOLocalRotate(
+            targetRotation,
+            rotateDuration
+        ).SetEase(rotateEase);
+    }
+
+    #endregion
 }

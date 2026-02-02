@@ -9627,7 +9627,7 @@ AudioSource:
   m_GameObject: {fileID: 1273314581925930}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1596955591652186946, guid: 469744274e26b1d4abb7d1eb15d5d4fb, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 64b0bbd49cf28704bbbdfaef619abe94, type: 3}
   m_PlayOnAwake: 1
@@ -9642,7 +9642,7 @@ AudioSource:
   MinDistance: 3
   MaxDistance: 250
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

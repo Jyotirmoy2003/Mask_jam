@@ -10,4 +10,6 @@ public class GameAssets : MonoSingleton<GameAssets>
     public Color knobConnectedColor;
     [Header("Game Events")]
     public GameEvent OnCoinCollectedEvent;
+
+    public GameObject explosionVFX;
 }

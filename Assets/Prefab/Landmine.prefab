@@ -28,9 +28,9 @@ Transform:
   m_GameObject: {fileID: 1577851709285919688}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 0.064, z: -0.009}
+  m_LocalScale: {x: 0.1, y: 0.038001, z: 0.1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8507214865630056830}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e6938a84fdd5741b6d101c1185b3c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Landmine
+  groundOffset: 0.2
   damage: 100
   explosionRadius: 5
   explosionForce: 20
@@ -163,12 +164,10 @@ MonoBehaviour:
     m_Bits: 4294967295
   beepSound: {fileID: 509046975647518920}
   beepSoundInterval: 2.5
-  explosionVFX: {fileID: 1273314581925930, guid: 31a254077dcab2d4eb6e0d233f4274c2, type: 3}
   destroyDelay: 0.1
-  lindMineMeshes:
+  maskEffectMeshed:
   - {fileID: 7938719125830863806}
   - {fileID: 1577851709285919688}
-  mineRevealVisual: {fileID: 7420007275124184173}
 --- !u!136 &4146686217523170763
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -201,7 +200,7 @@ AudioSource:
   m_GameObject: {fileID: 7090285381890900777}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1596955591652186946, guid: 469744274e26b1d4abb7d1eb15d5d4fb, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: a972b4e54fbdbc843ba5b29413662642, type: 3}
   m_PlayOnAwake: 0
@@ -216,7 +215,7 @@ AudioSource:
   MinDistance: 0.1
   MaxDistance: 5
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

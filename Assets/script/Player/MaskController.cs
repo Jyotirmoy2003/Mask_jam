@@ -39,8 +39,6 @@ public class MaskController : BatterySystem
 
     void ToggleMask()
     {
-       
-        isActive = !isActive;
         AcitvateMaskVision(isActive);
     }
 
@@ -48,15 +46,20 @@ public class MaskController : BatterySystem
     
     public void AcitvateMaskVision(bool IsActive)
     {
-        if (IsActive && isBatteryUsable)
+        
+        if (!IsActive && isBatteryUsable)
         {
-             if(isOnCooldown)
+            if(isOnCooldown)
             {
                 //    UIManager.Instance.ShowLogOnScreen("On Cool Down..");
+                UIManager.Instance.ShakeCooldownUI();
+                AudioManager.instance.PlaySound("Cooldown");
                 return;
             }
             // cam.fieldOfView=60;
             // zoomBar.fillAmount=0.6f;
+
+            isActive = true;
             UpdateDel = MaskVisionUpdate;
             nightVisionOverlay.SetActive(true);
             
@@ -68,11 +71,19 @@ public class MaskController : BatterySystem
         {
             // cam.fieldOfView=60;
             // zoomBar.fillAmount=0.6f;
+            isActive = false;
             UpdateDel = null;
             nightVisionOverlay.SetActive(false);
 
             VisionSwitcher.Instance.SetNormalVision();
             Evnet_OnMaskModeChanged?.Raise(this,false);
+        }
+
+        if(!isBatteryUsable)
+        {
+            AudioManager.instance.PlaySound("NoBattery");
+            UIManager.Instance.BlinkNoBattery();
+            return;
         }
     }
 
@@ -84,6 +95,18 @@ public class MaskController : BatterySystem
         {
             AcitvateMaskVision(false);
 
+        }
+    }
+
+    public void ListenToOnPlayerDied(Component sender,object data)
+    {
+        if(sender is PlayerManager)
+        {
+            isActive = false;
+            UpdateDel = null;
+            nightVisionOverlay.SetActive(false);
+
+            Evnet_OnMaskModeChanged?.Raise(this,false);
         }
     }
 

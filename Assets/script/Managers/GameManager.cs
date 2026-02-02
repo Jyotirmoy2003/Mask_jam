@@ -9,13 +9,20 @@ public class GameManager : MonoSingleton<GameManager>
 
     public bool isGamePaused = false;
     public bool isPlayerDied = false;
+    [SerializeField] PlayerInput playerInput;
 
     void Start()
     {
         StarterAssetsInputs.INPAC_ONBACKBUTTONPRESSED += OnBackButtonPressed;
         UIManager.Instance.FadeOutBlackScreen();
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
         Application.targetFrameRate = 120;
+
+        if(PlayerPrefs.GetInt("FirstVisitControll",0) == 1)
+        {
+            UIManager.Instance.ShowControlls(false);
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
     public void OnPlayerDie()
     {
@@ -58,14 +65,14 @@ public class GameManager : MonoSingleton<GameManager>
     {
         if(isGamePaused)
         {
-            Time.timeScale = 1;
+            playerInput.ActivateInput();
             isGamePaused = false;
             UIManager.Instance.PauseMenuOpenStatus(false);
             Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {
-            Time.timeScale = 0;
+            playerInput.DeactivateInput();
             isGamePaused = true;
             UIManager.Instance.PauseMenuOpenStatus(true);
             Cursor.lockState = CursorLockMode.None;
@@ -87,6 +94,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void OnBackFromControlls()
     {
+        PlayerPrefs.SetInt("FirstVisitControll",1);
         UIManager.Instance.ShowControlls(false);
         if(isPlayerDied)
         {
